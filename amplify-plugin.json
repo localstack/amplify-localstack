@@ -1,0 +1,20 @@
+{
+  "name": "amplify-localstack",
+  "type": "util",
+  "commands": [
+    "version",
+    "help"
+  ],
+  "eventHandlers": [
+    "PreInit",
+    "PostInit",
+    "PrePush",
+    "PostPush",
+    "PrePull",
+    "PostPull",
+    "PostEnvAdd",
+    "PreCodegenModels",
+    "PostCodegenModels",
+    "InternalOnlyPostEnvRemove"
+  ]
+}

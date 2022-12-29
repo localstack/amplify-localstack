@@ -31,12 +31,17 @@ const patchConfigManagerLoader =  () => {
       return config
     }
     
-    console.log("Configuration Manager Patched")
   } catch (error) {
-    console.log("unable to patch Configuration Manager", error)
+    console.error("Error:\t\tLocalstack Plugin unable to patch Configuration Manager", error)
   }
 }
 
+const patchEverything = ()=> {
+    console.info("Info:\t\t Patching AWS Amplify libs")
+    patchConfigManagerLoader()
+}
+
 module.exports = {
-    patchConfigManagerLoader
+    patchConfigManagerLoader,
+    patchEverything
 }

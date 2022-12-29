@@ -37,7 +37,7 @@ const patchConfigManagerLoader =  () => {
 }
 
 const patchEverything = ()=> {
-    console.info("Info:\t\t Patching AWS Amplify libs")
+    console.info("Info:\t Patching AWS Amplify libs")
     patchConfigManagerLoader()
 }
 

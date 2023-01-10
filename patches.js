@@ -42,7 +42,7 @@ const patchConfigManagerLoader = () => {
 // Patchs the utility that copy files from .ejs to replace the hardcoded AWS domains with LocalStack domains
 const patchCopyBatch = () => {
   const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
-  const host = process.env.LOCALSTACK_HOSTNAME || DEFAULT_HOSTNAME;
+  const port = newDomain.split(":").pop()
   const copyBatchPath = `${snapshot_path}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
 
   try {
@@ -58,7 +58,7 @@ const patchCopyBatch = () => {
         // console.log(`LS Plugin is patching file: ${job.template}`)
         const file = job.target
         const content = fs.readFileSync(file).toString()
-        const new_content = content.replace("amazonaws.com", newDomain)
+        const new_content = content.replace(new RegExp(`amazonaws\.com(:${port})?`, "gm"), newDomain)
         fs.writeFileSync(file, new_content)
       })
     }

@@ -41,7 +41,7 @@ const patchConfigManagerLoader = () => {
 
 // Patchs the utility that copy files from .ejs to replace the hardcoded AWS domains with LocalStack domains
 const patchCopyBatch = () => {
-  const newDomain = getLocalEndpoint().replace("https://","").replace("http://", "")
+  const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
   const host = process.env.LOCALSTACK_HOSTNAME || DEFAULT_HOSTNAME;
   const copyBatchPath = `${snapshot_path}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
 
@@ -55,7 +55,7 @@ const patchCopyBatch = () => {
 
       // 
       jobs.forEach(job => {
-        console.log(`LS Plugin is patching file: ${job.template}`)
+        // console.log(`LS Plugin is patching file: ${job.template}`)
         const file = job.target
         const content = fs.readFileSync(file).toString()
         const new_content = content.replace("amazonaws.com", newDomain)
@@ -72,24 +72,22 @@ const patchCopyBatch = () => {
 // Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
 const patchWriteJsonFileUtility = () => {
   const jsonUtilitiesPath = `${snapshot_path}amplify-cli-core/lib/jsonUtilities`
-  const newDomain = getLocalEndpoint().replace("https://","").replace("http://", "")
+  const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
+  const port = newDomain.split(":").pop()
+
   try {
     const jsonUtilities = require(jsonUtilitiesPath)
     const oldMethod = jsonUtilities.JSONUtilities.writeJson
     jsonUtilities.JSONUtilities.writeJson = (fileName, data, options) => {
-      console.log(`LS Plugin is patching file: ${fileName}`)
-      if (fileName.includes("root-cloudformation-stack.json")){
-        console.log(data)
-      }
-      
-      const stringData = JSON.stringify(data).replace("amazonaws.com", newDomain)
+      // console.log(`LS Plugin is patching file: ${fileName}`)
+      const stringData = JSON.stringify(data).replace(new RegExp(`amazonaws\.com(:${port})?`, "gm"), newDomain)
+
       const newData = JSON.parse(stringData)
       oldMethod(fileName, newData, options)
     }
   } catch (error) {
     console.error("Error:\t\tLocalstack Plugin unable to patch WriteJsonFile Utility", error)
   }
-
 }
 
 const patchEverything = () => {

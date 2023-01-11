@@ -64,7 +64,7 @@ const patchCopyBatch = () => {
     }
 
   } catch (error) {
-    console.error("Error:\t\tLocalstack Plugin unable to patch CopyBatch Utility", error)
+    console.error("Error:\t\tLocalStack Plugin unable to patch CopyBatch Utility", error)
   }
 }
 

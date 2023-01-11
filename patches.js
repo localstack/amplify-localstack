@@ -9,7 +9,7 @@ const AWS_ACCESS_KEY_ID = 'test';
 const AWS_SECRET_ACCESS_KEY = 'test';
 const AWS_DEFAULT_REGION = "us-east-1"
 
-const snapshot_path = "/snapshot/repo/build/node_modules/"
+const snapshotPath = "/snapshot/repo/build/node_modules/"
 // packageLocation: '/snapshot/repo/build/node_modules/amplify-provider-awscloudformation',
 
 const getLocalEndpoint = () => {
@@ -21,7 +21,7 @@ const getLocalEndpoint = () => {
 // Patchs the awscloudformation provider plugin to deploy the resources into LocalStack
 const patchConfigManagerLoader = () => {
   try {
-    const configManagerPath = `${snapshot_path}amplify-provider-awscloudformation/lib/configuration-manager`;
+    const configManagerPath = `${snapshotPath}amplify-provider-awscloudformation/lib/configuration-manager`;
     const sysConfigManager = require(configManagerPath);
 
     sysConfigManager.loadConfiguration = () => {
@@ -43,7 +43,7 @@ const patchConfigManagerLoader = () => {
 const patchCopyBatch = () => {
   const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
   const port = newDomain.split(":").pop()
-  const copyBatchPath = `${snapshot_path}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
+  const copyBatchPath = `${snapshotPath}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
 
   try {
 
@@ -71,7 +71,7 @@ const patchCopyBatch = () => {
 
 // Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
 const patchWriteJsonFileUtility = () => {
-  const jsonUtilitiesPath = `${snapshot_path}amplify-cli-core/lib/jsonUtilities`
+  const jsonUtilitiesPath = `${snapshotPath}amplify-cli-core/lib/jsonUtilities`
   const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
   const port = newDomain.split(":").pop()
 

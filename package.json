@@ -1,11 +1,14 @@
 {
   "name": "amplify-localstack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "Apache 2.0",
+  "dependencies": {
+    "yesno": "^0.4.0"
+  }
 }

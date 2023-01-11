@@ -48,7 +48,7 @@ const patchCopyBatch = () => {
   try {
 
     const copyBatchLib = require(copyBatchPath);
-    oldMethod = copyBatchLib.copyBatch
+    const oldMethod = copyBatchLib.copyBatch
     copyBatchLib.copyBatch = async (context, jobs, props, force, writeParams) => {
 
       await oldMethod(context, jobs, props, force, writeParams)

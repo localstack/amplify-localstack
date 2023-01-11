@@ -1,4 +1,4 @@
-# Amplify Localstack Plugin
+# Amplify LocalStack Plugin
 
 **Amplify** Plugin to support running against (LocalStack)[https://github.com/localstack/localstack]
 

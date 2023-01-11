@@ -35,7 +35,7 @@ const patchConfigManagerLoader = () => {
     }
 
   } catch (error) {
-    console.error("Error:\t\tLocalstack Plugin unable to patch Configuration Manager", error)
+    console.error("Error:\t\tLocalStack plugin unable to patch Configuration Manager", error)
   }
 }
 

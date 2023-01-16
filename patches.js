@@ -90,6 +90,7 @@ const patchWriteJsonFileUtility = () => {
   }
 }
 
+
 const patchEverything = () => {
   console.info("Info:\t Patching AWS Amplify libs")
   patchConfigManagerLoader()
@@ -98,6 +99,6 @@ const patchEverything = () => {
 }
 
 module.exports = {
-  patchConfigManagerLoader,
-  patchEverything
+  patchEverything,
+  getLocalEndpoint
 }

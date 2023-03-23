@@ -5,7 +5,7 @@
 This plugin allows the amplify CLI tool to create resources directly on your local machine. Any request to AWS is redirected to a running LocalStack instance.
 
 ## Prerequisites
-- Localstack Pro
+- LocalStack Pro
 
 ## Installation
 

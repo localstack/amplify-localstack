@@ -4,22 +4,19 @@ const patches = require("../patches")
 
 async function run(context, args) {
   const options = context.parameters.options
+  const inputValue = options['use-localstack']
   let doPatch = false
-  const value = options['use-localstack']
-  if (value != undefined){
-    if (value == 'true'){
-      doPatch = true
-    }else if(value == 'false'){
-      doPatch = false
-    }else{
-      context.print.error(`ERROR: "${value}" is an invalid value for parameter --use-localstack. Please use true or false`)
-    }
-
-  }else{
-    const doPatch = await yesno({
+  if (inputValue == undefined){
+    doPatch = await yesno({
         question: 'Do you want to create the project in LocalStack? [y/N]',
         defaultValue: "n"
     });
+  }else if (inputValue == 'true'){
+    doPatch = true
+  }else if (inputValue == 'false'){
+    doPatch = false
+  }else{
+    context.print.error(`ERROR: "${value}" is an invalid value for parameter --use-localstack. Please use true or false`)
   }
 
   if (doPatch == true){

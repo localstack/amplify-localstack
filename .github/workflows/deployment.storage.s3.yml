@@ -34,10 +34,10 @@ jobs:
         run: |
           amplify plugin add amplify-localstack --path ${{ github.workspace }}
       
-      -name: Init Amplify Project 
-       run: amplify init --use-localstack true
+      - name: Init Amplify Project 
+        run: amplify init --use-localstack true
 
-      - name: Deploy Amplify Storage Resource
+      - name: Deploy Amplify S3 Storage Resource
         run: |
-          amplify add storage
+          amplify add storage --type S3 --name myStorage --bucketName my-bucket --yes
           amplify push --use-localstack true

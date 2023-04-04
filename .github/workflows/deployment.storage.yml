@@ -1,0 +1,43 @@
+name: Deploy Amplify Storage Resource to Localstack
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  AWS_ACCESS_KEY_ID: test
+  AWS_SECRET_ACCESS_KEY: test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Localstack
+        run: pip install localstack
+        
+      - name: Start and wait for localstack 
+        timeout-minutes: 10
+        run: |
+          docker pull localstack/localstack:latest
+          localstack start -d
+          localstack wait -t 30
+      
+      - name: Install Amplify CLI
+        run: |
+          npm install -g @aws-amplify/cli
+
+      - name: Set up Amplify Plugin
+        run: |
+          amplify plugin add amplify-localstack --path ${{ github.workspace }}
+      
+      -name: Init Amplify Project 
+       run: amplify init --use-localstack true
+
+      - name: Deploy Amplify Storage Resource
+        run: |
+          amplify add storage
+          amplify push --use-localstack true

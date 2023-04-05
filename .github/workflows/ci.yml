@@ -43,7 +43,7 @@ jobs:
       - name: Install Localstack
         run: pip install localstack
       - name: Start and wait for localstack
-        timeout-minutes: 10
+        timeout-minutes: 5
         run: |
           docker pull localstack/localstack:latest
           localstack start -d

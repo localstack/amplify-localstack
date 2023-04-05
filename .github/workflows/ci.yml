@@ -48,8 +48,9 @@ jobs:
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
-        run: amplify plugin scan
-        # run: amplify plugin add amplify-localstack --path ${{ github.workspace }} --yes
+        run: |
+         npm install -g .
+         amplify plugin scan
       - name: Init Amplify Project
         run: |
           mkdir test_project

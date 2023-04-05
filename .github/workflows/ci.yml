@@ -42,7 +42,7 @@ jobs:
         run: amplify plugin scan
       
       - name: check installation
-        run: amplify plugin list
+        run: amplify plugin info amplify-localstack
       
       - name: Init Amplify Project
         run: |

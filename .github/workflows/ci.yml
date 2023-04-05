@@ -9,19 +9,8 @@ on:
     branches:
       - main
 
-env:
-  AWS_ACCESS_KEY_ID: test
-  AWS_SECRET_ACCESS_KEY: test
-  AWSCLOUDFORMATIONCONFIG: "{\"awscloudformation\":{\
-  \"configLevel\":\"project\",\
-  \"useProfile\":false,\
-  \"profileName\":\"user\",\
-  \"accessKeyId\":\"test\",\
-  \"secretAccessKey\":\"test\"\
-  }}"
-
 jobs:
-  build-and-lint:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,20 +27,23 @@ jobs:
           aws configure set aws_secret_access_key "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY" --profile default 
           aws configure set region "us-east-1" --profile default
           aws configure set output "json" --profile default
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Localstack
-        run: pip install localstack
-      - name: Start and wait for localstack
-        timeout-minutes: 5
-        run: |
-          docker pull localstack/localstack:latest
-          localstack start -d
-          localstack wait -t 30
+      # - name: Install Localstack
+      #   run: pip install localstack
+      # - name: Start and wait for localstack
+      #   timeout-minutes: 5
+      #   run: |
+      #     docker pull localstack/localstack:latest
+      #     localstack start -d
+      #     localstack wait -t 30
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
+  
       - name: Set up Amplify Plugin
         run: amplify plugin scan
+      
+      - name: check installation
+        run: amplify plugin list
+      
       - name: Init Amplify Project
         run: |
           mkdir test_project

@@ -34,10 +34,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Configure AWS
         run: |
-          aws configure set aws_access_key_id "AKIAI44QH8DHBEXAMPLE" --profile user
-          aws configure set aws_secret_access_key "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY" --profile user 
-          aws configure set region "us-east-1" --profile user
-          aws configure set output "json" --profile user
+          aws configure set aws_access_key_id "AKIAI44QH8DHBEXAMPLE" --profile default
+          aws configure set aws_secret_access_key "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY" --profile default 
+          aws configure set region "us-east-1" --profile default
+          aws configure set output "json" --profile default
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Localstack
@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir test_project
           cd test_project
-          amplify init --envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-localstack true
+          amplify init --envName test --yes --use-localstack true
       - name: Deploy Amplify S3 Storage Resource
         working-directory: test_project
         run: |

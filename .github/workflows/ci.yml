@@ -54,7 +54,7 @@ jobs:
         run: |
           mkdir test_project
           cd test_project
-          amplify init --envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-profile false --use-localstack true
+          amplify init --envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-localstack true
 
   deploy-storage-s3:
     runs-on: ubuntu-latest

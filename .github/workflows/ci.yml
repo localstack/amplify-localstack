@@ -26,35 +26,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Install Localstack
         run: pip install localstack
-        
-      - name: Start and wait for localstack 
+      - name: Start and wait for localstack
         timeout-minutes: 10
         run: |
           docker pull localstack/localstack:latest
           localstack start -d
           localstack wait -t 30
-      
       - name: Install Amplify CLI
-        run: |
-          npm install -g @aws-amplify/cli
-
+        run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
+        run: amplify plugin add amplify-localstack --path ${{ github.workspace }}
+      - name: Init Amplify Project
         run: |
-          amplify plugin add amplify-localstack --path ${{ github.workspace }}
-      
-      - name: Init Amplify Project 
-        run: |
-         mkdir test_project 
-         cd test_project
-         amplify init --use-localstack true --yes
-  
+          mkdir test_project
+          cd test_project
+          amplify init --use-localstack true --yes
+
   deploy-storage-s3:
     runs-on: ubuntu-latest
+    steps:
       - name: Deploy Amplify S3 Storage Resource
-        working_directory: test_project
+        working-directory: test_project
         run: |
           amplify add storage --type S3 --name myStorage --bucketName my-bucket --yes
           amplify push --use-localstack true

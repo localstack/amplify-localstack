@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     paths-ignore:
@@ -13,7 +12,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: test
   AWS_SECRET_ACCESS_KEY: test
-  AWSCLOUDFORMATIONCONFIG: "{\"awscloudformation\"{\
+  AWSCLOUDFORMATIONCONFIG: "{\"awscloudformation\":{\
   \"configLevel\":\"project\",\
   \"useProfile\":false,\
   \"profileName\":\"default\",\
@@ -54,7 +53,7 @@ jobs:
         run: |
           mkdir test_project
           cd test_project
-          amplify init --appId test--envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-profile false --use-localstack true
+          amplify init --appId test--envName test --yes --providers ${{ env.PROVIDERS}} --use-profile false --use-localstack true
 
   deploy-storage-s3:
     runs-on: ubuntu-latest

@@ -14,11 +14,8 @@ env:
   AWS_SECRET_ACCESS_KEY: test
   AWSCLOUDFORMATIONCONFIG: "{\"awscloudformation\":{\
   \"configLevel\":\"project\",\
-  \"useProfile\":false,\
-  \"profileName\":\"default\",\
-  \"accessKeyId\":\"headlessaccesskeyid\",\
-  \"secretAccessKey\":\"headlesssecrectaccesskey\",\
-  \"region\":\"us-east-1\"\
+  \"useProfile\":true,\
+  \"profileName\":\"user\",\
   }}"
 
 jobs:
@@ -37,17 +34,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and Lint
+      - name: Configure AWS
         run: |
           aws configure set aws_access_key_id "AKIAI44QH8DHBEXAMPLE" --profile user
           aws configure set aws_secret_access_key "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY" --profile user 
           aws configure set region "us-east-1" --profile user
           aws configure set output "json" --profile user
-
-
-  setup-amplify-cli:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Localstack
@@ -67,10 +59,6 @@ jobs:
           mkdir test_project
           cd test_project
           amplify init --envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-localstack true
-
-  deploy-storage-s3:
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy Amplify S3 Storage Resource
         working-directory: test_project
         run: |

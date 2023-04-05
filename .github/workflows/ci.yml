@@ -10,6 +10,10 @@ on:
     branches:
       - main
 
+env:
+  AWS_ACCESS_KEY_ID: test
+  AWS_SECRET_ACCESS_KEY: test
+
 jobs:
   build-and-lint:
     runs-on: ubuntu-latest

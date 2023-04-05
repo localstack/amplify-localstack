@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir test_project
           cd test_project
-          amplify init --appId test--envName test --yes --accessKeyId TEST --secretAccessKey TEST --use-localstack true
+          amplify init --appId test--envName test --yes --accessKeyId TEST --secretAccessKey TEST --providers amplify-provider-awscloudformation --use-localstack true
 
   deploy-storage-s3:
     runs-on: ubuntu-latest

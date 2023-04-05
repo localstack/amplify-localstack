@@ -1,15 +1,27 @@
-name: Deployment
+name: Build
 
 on:
   push:
-    branches: [ main ]
-
-env:
-  AWS_ACCESS_KEY_ID: test
-  AWS_SECRET_ACCESS_KEY: test
+    paths-ignore:
+      - 'README.md'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  deploy:
+  build-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Lint
+        run: |
+          npm install
+          npm run lint
+
+  deploy-storage:
     runs-on: ubuntu-latest
 
     steps:

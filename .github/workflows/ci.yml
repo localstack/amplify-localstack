@@ -41,12 +41,12 @@ jobs:
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
-        run: amplify plugin add amplify-localstack --path ${{ github.workspace }}
+        run: amplify plugin add amplify-localstack --path ${{ github.workspace }} --yes
       - name: Init Amplify Project
         run: |
           mkdir test_project
           cd test_project
-          amplify init --appId test--envName test --yes --awsAccessKeyId TEST --awsSecretAccessKey TEST --providers amplify-provider-awscloudformation --use-localstack true
+          amplify init --appId test--envName test --yes --providers amplify-provider-awscloudformation --use-profile false --use-localstack true
 
   deploy-storage-s3:
     runs-on: ubuntu-latest

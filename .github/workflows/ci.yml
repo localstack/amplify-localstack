@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build and Lint
         run: |
-          npm install
+          npm -g install .
           npm run lint
 
   setup-amplify-cli:
@@ -48,12 +48,13 @@ jobs:
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
-        run: amplify plugin add amplify-localstack --path ${{ github.workspace }} --yes
+        run: amplify plugin scan
+        # run: amplify plugin add amplify-localstack --path ${{ github.workspace }} --yes
       - name: Init Amplify Project
         run: |
           mkdir test_project
           cd test_project
-          amplify init --appId test--envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-profile false --use-localstack true
+          amplify init --envName test --yes --providers ${{ env.AWSCLOUDFORMATIONCONFIG}} --use-profile false --use-localstack true
 
   deploy-storage-s3:
     runs-on: ubuntu-latest

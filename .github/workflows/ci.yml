@@ -14,7 +14,7 @@ env:
   AWS_SECRET_ACCESS_KEY: test
   AWSCLOUDFORMATIONCONFIG: "{\"awscloudformation\":{\
   \"configLevel\":\"project\",\
-  \"useProfile\":true,\
+  \"useProfile\":false,\
   \"profileName\":\"user\",\
   \"accessKeyId\":\"test\",\
   \"secretAccessKey\":\"test\"\

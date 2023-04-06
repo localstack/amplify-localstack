@@ -13,12 +13,20 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install Amplify CLI
+        run: npm install -g @aws-amplify/cli
       - name: Build and Lint
         run: |
           npm -g install .
           npm run lint
+      - name: Set up Amplify Plugin
+        run: amplify plugin scan
       - name: Checkout
         uses: actions/checkout@v2
       - name: Configure AWS
@@ -35,15 +43,7 @@ jobs:
       #     docker pull localstack/localstack:latest
       #     localstack start -d
       #     localstack wait -t 30
-      - name: Install Amplify CLI
-        run: npm install -g @aws-amplify/cli
   
-      - name: Set up Amplify Plugin
-        run: amplify plugin scan
-      
-      - name: check installation
-        run: amplify plugin verify amplify-localstack
-      
       - name: Init Amplify Project
         run: |
           mkdir test_project

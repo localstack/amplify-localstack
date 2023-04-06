@@ -23,10 +23,6 @@ jobs:
         run: |
           npm install
           npm run lint
-      # - name: cat files
-      #   run: |
-      #     cat patches.js
-      #     cat event-handlers/handle-PreInit.js
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
@@ -39,15 +35,14 @@ jobs:
           aws configure set aws_secret_access_key "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY" --profile default 
           aws configure set region "us-east-1" --profile default
           aws configure set output "json" --profile default
-      # - name: Install Localstack
-      #   run: pip install localstack
-      # - name: Start and wait for localstack
-      #   timeout-minutes: 5
-      #   run: |
-      #     docker pull localstack/localstack:latest
-      #     localstack start -d
-      #     localstack wait -t 30
-  
+      - name: Install Localstack
+        run: pip install localstack
+      - name: Start and wait for localstack
+        timeout-minutes: 5
+        run: |
+          docker pull localstack/localstack:latest
+          localstack start -d
+          localstack wait -t 30
       - name: Init Amplify Project
         run: |
           mkdir test_project

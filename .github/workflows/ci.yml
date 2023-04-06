@@ -25,8 +25,8 @@ jobs:
         run: npm install -g @aws-amplify/cli
       - name: Set up Amplify Plugin
         run: |
-        npm -g install .
-        amplify plugin scan
+          npm -g install .
+          amplify plugin scan
       - name: Checkout
         uses: actions/checkout@v2
       - name: Configure AWS

@@ -50,14 +50,21 @@ jobs:
           cd test_project
           amplify init --envName test --yes --use-localstack true
       
-      - name: Deploy Amplify S3 Storage Resource
+      - name: Add Auth Resource
         working-directory: test_project
         run: |
-          amplify add storage --type S3 --name myStorage --bucketName my-bucket --yes
-          amplify push --use-localstack true
-
-      - name: Deploy Amplify DinamoDB Storage Resource
+          cat ../headlessRequests/addAuth.json | jq -c | amplify add auth --headless 
+      
+      - name: Add Storage Resource
         working-directory: test_project
         run: |
-          amplify add storage --type S3 --name myStorage --bucketName my-bucket --yes
-          amplify push --use-localstack true
+          cat ../headlessRequests/addStorage.json | jq -c | amplify add storage --headless 
+      
+      - name: Add Api Resource
+        working-directory: test_project
+        run: |
+          cat ../headlessRequests/addApi.json | jq -c | amplify add api --headless 
+      
+      - name: Push Resources
+        working-directory: test_project
+        run: amplify push --use-localstack true

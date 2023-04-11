@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "S3",
+    "bucketName": "my-bucket",
+    "region": "us-west-2",
+    "permissions": {
+        "auth": ["CREATE_AND_UPDATE", "READ", "DELETE"]
+    },
+    "resourceName": "my-s3-resource"
+  }
+}

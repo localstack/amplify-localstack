@@ -67,4 +67,4 @@ jobs:
       
       - name: Push Resources
         working-directory: test_project
-        run: amplify push --use-localstack true
+        run: amplify push --use-localstack true --yes

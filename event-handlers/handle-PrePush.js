@@ -19,7 +19,7 @@ async function run(context, args) {
   }
 
   if (doPatch == true){
-    patches.patchEverything()
+    patches.patchEverything(context)
   }
 }
 

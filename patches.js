@@ -10,7 +10,6 @@ const AWS_SECRET_ACCESS_KEY = 'test';
 const AWS_DEFAULT_REGION = "us-east-1"
 
 const snapshotPath = "/snapshot/repo/build/node_modules/"
-// packageLocation: '/snapshot/repo/build/node_modules/amplify-provider-awscloudformation',
 
 const getLocalEndpoint = () => {
   const port = process.env.EDGE_PORT || DEFAULT_EDGE_PORT;
@@ -19,10 +18,11 @@ const getLocalEndpoint = () => {
 };
 
 // Patchs the awscloudformation provider plugin to deploy the resources into LocalStack
-const patchConfigManagerLoader = () => {
+const patchConfigManagerLoader = (context) => {
   try {
-    const configManagerPath = `${snapshotPath}amplify-provider-awscloudformation/lib/configuration-manager`;
+    const configManagerPath = `${snapshotPath}@aws-amplify/amplify-provider-awscloudformation/lib/configuration-manager.js`;
     const sysConfigManager = require(configManagerPath);
+
 
     sysConfigManager.loadConfiguration = () => {
       const config = {}
@@ -35,12 +35,12 @@ const patchConfigManagerLoader = () => {
     }
 
   } catch (error) {
-    console.error("Error:\t\tLocalStack plugin unable to patch Configuration Manager", error)
+    context.print.error("Error:\t\tLocalStack plugin unable to patch Configuration Manager", error)
   }
 }
 
 // Patchs the utility that copy files from .ejs to replace the hardcoded AWS domains with LocalStack domains
-const patchCopyBatch = () => {
+const patchCopyBatch = (context) => {
   const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
   const port = newDomain.split(":").pop()
   const copyBatchPath = `${snapshotPath}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
@@ -64,13 +64,13 @@ const patchCopyBatch = () => {
     }
 
   } catch (error) {
-    console.error("Error:\t\tLocalStack Plugin unable to patch CopyBatch Utility", error)
+    context.print.error("Error:\t\tLocalStack Plugin unable to patch CopyBatch Utility", error)
   }
 }
 
 
 // Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
-const patchWriteJsonFileUtility = () => {
+const patchWriteJsonFileUtility = (context) => {
   const jsonUtilitiesPath = `${snapshotPath}amplify-cli-core/lib/jsonUtilities`
   const newDomain = getLocalEndpoint().replace("https://", "").replace("http://", "")
   const port = newDomain.split(":").pop()
@@ -86,15 +86,15 @@ const patchWriteJsonFileUtility = () => {
       oldMethod(fileName, newData, options)
     }
   } catch (error) {
-    console.error("Error:\t\tLocalstack Plugin unable to patch WriteJsonFile Utility", error)
+    context.print.error("Error:\t\tLocalstack Plugin unable to patch WriteJsonFile Utility", error)
   }
 }
 
-const patchEverything = () => {
-  console.info("Info:\t Patching AWS Amplify libs")
-  patchConfigManagerLoader()
-  patchCopyBatch()
-  patchWriteJsonFileUtility()
+const patchEverything = (context) => {
+  context.print.info("Info:\t Patching AWS Amplify libs")
+  patchConfigManagerLoader(context)
+  patchCopyBatch(context)
+  patchWriteJsonFileUtility(context)
 }
 
 module.exports = {

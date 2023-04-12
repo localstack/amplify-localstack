@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "resourceName": "auth-resource",
+  "serviceConfiguration": {
+    "serviceName": "Cognito",
+    "includeIdentityPool": false,
+    "userPoolConfiguration": {
+      "signinMethod": "EMAIL",
+      "requiredSignupAttributes": [
+        "EMAIL"
+      ]
+    }
+  }
+}

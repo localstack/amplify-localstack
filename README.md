@@ -12,18 +12,31 @@ This plugin allows the amplify CLI tool to create resources directly on your loc
 ### Installation with npm:
 ```sh
 npm install -g amplify-localstack
-amplify plugin install amplify-localstack
+amplify plugin add amplify-localstack
 ```
 
 ### Installation with local project (mostly for devs):
 ```sh
-amplify plugin install amplify-localstack
+amplify plugin add amplify-localstack
 # A message about the plugin not being found will appear
 # Input the root path of this project as input
 ```
 
 ## Usage
 After the installation of the plugin, everytime you run the commands `amplify init` or `amplify push` the console will prompt you to select if you want to deploy the resources into LocalStack.
+
+### Parameters:
+You can also add the parameters `--use-localstack true` to avoid being asked if you want to use localstack
+
+Examples:
+```sh
+amplify init --use-localstack true
+amplify add api
+amplify push --use-localstack
+```
+
+
+
 
 ### Configuration
 The following environment variables can be configured:

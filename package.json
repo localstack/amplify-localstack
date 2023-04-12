@@ -1,14 +1,16 @@
 {
   "name": "amplify-localstack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"Linter not implemented yet\" && exit 0"
   },
   "author": "",
   "license": "Apache 2.0",
   "dependencies": {
+    "cypress": "^12.9.0",
     "yesno": "^0.4.0"
   }
 }

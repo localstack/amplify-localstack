@@ -35,9 +35,6 @@ amplify add api
 amplify push --use-localstack true
 ```
 
-
-
-
 ### Configuration
 The following environment variables can be configured:
 

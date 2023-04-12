@@ -32,7 +32,7 @@ Examples:
 ```sh
 amplify init --use-localstack true
 amplify add api
-amplify push --use-localstack
+amplify push --use-localstack true
 ```
 
 

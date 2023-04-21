@@ -1,11 +1,13 @@
 # Amplify LocalStack Plugin
+![example workflow](https://github.com/localstack/amplify-localstack/actions/workflows/ci.yml/badge.svg)
 
-**Amplify** Plugin to support running against [LocalStack](https://github.com/localstack/localstack)
+**Amplify CLI** Plugin to support running against [LocalStack](https://github.com/localstack/localstack)
 
 This plugin allows the amplify CLI tool to create resources directly on your local machine. Any request to AWS is redirected to a running LocalStack instance.
 
 ## Prerequisites
 - LocalStack Pro
+- Amplify CLI Tool >= 4.41.0
 
 ## Installation
 

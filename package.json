@@ -5,12 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "echo \"Linter not implemented yet\" && exit 0"
+    "lint":  "eslint *.js"
   },
   "author": "",
   "license": "Apache 2.0",
   "dependencies": {
     "cypress": "^12.9.0",
     "yesno": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }

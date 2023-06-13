@@ -8,6 +8,11 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      upstream-version:
+        description: Upstream aws-cdk version to use in tests
+        required: false
 
 jobs:
   build-and-deploy:

@@ -8,8 +8,8 @@ const AWS_ACCESS_KEY_ID = 'test'
 const AWS_SECRET_ACCESS_KEY = 'test'
 const AWS_DEFAULT_REGION = 'us-east-1'
 
-const snapshotPath = '/snapshot/repo/build/node_modules/'
-
+// const snapshotPath = '/snapshot/repo/build/node_modules/'
+const snapshotPath = '/snapshot/amplify-cli/build/node_modules/'
 const getLocalEndpoint = () => {
   const port = process.env.EDGE_PORT || DEFAULT_EDGE_PORT
   const host = process.env.LOCALSTACK_HOSTNAME || DEFAULT_HOSTNAME
@@ -64,7 +64,7 @@ const patchCopyBatch = (context) => {
 
 // Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
 const patchWriteJsonFileUtility = (context) => {
-  const jsonUtilitiesPath = `${snapshotPath}amplify-cli-core/lib/jsonUtilities`
+  const jsonUtilitiesPath = `${snapshotPath}@aws-amplify/amplify-cli-core/lib/jsonUtilities`
   const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
   const port = newDomain.split(':').pop()
 

@@ -83,7 +83,7 @@ const patchWriteJsonFileUtility = (context) => {
   }
 }
 
-const patchAwsSdkConfig = function(context){
+const patchAwsSdkConfig = function (context) {
   const awsCorePath = `${snapshotPath}aws-sdk/lib/core`
   const endpoint = getLocalEndpoint()
 

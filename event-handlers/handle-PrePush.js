@@ -10,9 +10,9 @@ async function run(context, args) {
         question: 'Do you want to create the resource in LocalStack? [y/N]',
         defaultValue: "n"
     });
-  }else if (inputValue == 'true'){
+  }else if (inputValue.toLowerCase() == 'true' || inputValue.toLowerCase() == 'yes'){
     doPatch = true
-  }else if (inputValue == 'false'){
+  }else if (inputValue.toLowerCase()== 'false' || inputValue.toLowerCase() == 'no'){
     doPatch = false
   }else{
     context.print.error(`ERROR: "${value}" is an invalid value for parameter --use-localstack. Please use true or false`)

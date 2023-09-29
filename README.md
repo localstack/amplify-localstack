@@ -45,6 +45,7 @@ The following environment variables can be configured:
 * `LOCALSTACK_ENDPOINT`: Sets a custom endpoint directly. Overrides `EDGE_PORT` and `LOCALSTACK_HOSTNAME` (default `https://localhost.localstack.cloud:4566`)
 
 ## Change Log
+* 0.2.5: patch AWS-SDK Config
 * 0.2.4: add missing handlers
 * 0.2.3: fix paths for patching
 * 0.2.2: command line parameters

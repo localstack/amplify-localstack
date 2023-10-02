@@ -11,9 +11,9 @@ async function run(context, args) {
         question: 'Do you want to create the project in LocalStack? [y/N]',
         defaultValue: "n"
     });
-  }else if (inputValue == 'true'){
+  }else if (['true', 'yes'].includes(inputValue.toLowerCase())){
     doPatch = true
-  }else if (inputValue == 'false'){
+  }else if (['false', 'no'].includes(inputValue.toLowerCase())){
     doPatch = false
   }else{
     context.print.error(`ERROR: "${value}" is an invalid value for parameter --use-localstack. Please use true or false`)

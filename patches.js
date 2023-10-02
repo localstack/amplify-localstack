@@ -83,8 +83,21 @@ const patchWriteJsonFileUtility = (context) => {
   }
 }
 
+const patchAwsSdkConfig = function (context) {
+  const awsCorePath = `${snapshotPath}aws-sdk/lib/core`
+  const endpoint = getLocalEndpoint()
+
+  try {
+    const awsConfig = require(awsCorePath)
+    awsConfig.config.endpoint = endpoint
+  } catch (error) {
+    context.print.error('Error:\t\tLocalstack Plugin unable to patch AWS SDK Config', error)
+  }
+}
+
 const patchEverything = (context) => {
   context.print.info('Info:\t Patching AWS Amplify libs')
+  patchAwsSdkConfig(context)
   patchConfigManagerLoader(context)
   patchCopyBatch(context)
   patchWriteJsonFileUtility(context)

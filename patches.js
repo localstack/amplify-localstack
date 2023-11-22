@@ -11,9 +11,7 @@ const AWS_DEFAULT_REGION = 'us-east-1'
 // const snapshotPath = '/snapshot/repo/build/node_modules/'
 const snapshotPath = '/snapshot/amplify-cli/build/node_modules/'
 const getLocalEndpoint = () => {
-  const port = process.env.EDGE_PORT || DEFAULT_EDGE_PORT
-  const host = process.env.LOCALSTACK_HOSTNAME || DEFAULT_HOSTNAME
-  return process.env.LOCALSTACK_ENDPOINT || `https://${host}:${port}`
+  return process.env.LOCALSTACK_ENDPOINT || `https://${DEFAULT_HOSTNAME}:${DEFAULT_EDGE_PORT}`
 }
 
 // Patchs the awscloudformation provider plugin to deploy the resources into LocalStack
@@ -25,10 +23,10 @@ const patchConfigManagerLoader = (context) => {
     sysConfigManager.loadConfiguration = () => {
       const config = {}
       config.endpoint = getLocalEndpoint()
-      config.accessKeyId = AWS_ACCESS_KEY_ID
-      config.secretAccessKey = AWS_SECRET_ACCESS_KEY
-      config.s3ForcePathStyle = true
-      config.region = AWS_DEFAULT_REGION
+      config.accessKeyId = process.env.LOCALSTACK_ACCESS_KEY_ID || AWS_ACCESS_KEY_ID
+      config.secretAccessKey = process.env.LOCALSTACK_ACCESS_KEY_SECRET || AWS_SECRET_ACCESS_KEY
+      config.s3ForcePathStyle = process.env.LOCALSTACK_S3_FORCE_PATH_STYLE !== '0'
+      config.region = process.env.LOCALSTACK_REGION || AWS_DEFAULT_REGION
       return config
     }
   } catch (error) {

@@ -40,11 +40,14 @@ amplify push --use-localstack true
 ### Configuration
 The following environment variables can be configured:
 
-* `EDGE_PORT`: Port under which LocalStack edge service is accessible (default: `4566`)
-* `LOCALSTACK_HOSTNAME`: Target host under which LocalStack edge service is accessible (default: `localhost.localstack.cloud`)
-* `LOCALSTACK_ENDPOINT`: Sets a custom endpoint directly. Overrides `EDGE_PORT` and `LOCALSTACK_HOSTNAME` (default `https://localhost.localstack.cloud:4566`)
+* `LOCALSTACK_ACCESS_KEY_ID`: Sets custom Access Key Id for the internal client to use (default `test`).
+* `LOCALSTACK_ACCESS_KEY_SECRET`: Sets custom Access Key Secret for the internal client to use (default `test`).
+* `LOCALSTACK_REGION`: Sets a custom region (default `us-east-1`).
+* `LOCALSTACK_S3_FORCE_PATH_STYLE`: Sets the S3 path style (default `1`, accepted values: `1`as true and `0` as false)).
+* `LOCALSTACK_ENDPOINT`: Sets a custom endpoint (default `https://localhost.localstack.cloud:4566`).
 
 ## Change Log
+* 0.3.0: more and up to date settings
 * 0.2.5: patch AWS-SDK Config
 * 0.2.4: add missing handlers
 * 0.2.3: fix paths for patching

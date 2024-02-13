@@ -1,8 +1,6 @@
-const eventName = 'PostPush';
-
-async function run(context, args) {
+async function run (context, args) {
 }
 
 module.exports = {
-  run,
-};
+  run
+}

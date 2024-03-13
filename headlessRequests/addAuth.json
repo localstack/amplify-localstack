@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "resourceName": "auth-resource",
+  "resourceName": "auth",
   "serviceConfiguration": {
     "serviceName": "Cognito",
     "includeIdentityPool": false,

@@ -7,6 +7,6 @@
     "permissions": {
         "auth": ["CREATE_AND_UPDATE", "READ", "DELETE"]
     },
-    "resourceName": "my-s3-resource"
+    "resourceName": "Bucket"
   }
 }

@@ -1,4 +1,4 @@
-const fs = require('fs')
+// const fs = require('fs')
 
 const DEFAULT_EDGE_PORT = 4566
 const DEFAULT_HOSTNAME = 'localhost.localstack.cloud'
@@ -35,32 +35,33 @@ const patchConfigManagerLoader = (context) => {
 }
 
 // Patchs the utility that copy files from .ejs to replace the hardcoded AWS domains with LocalStack domains
-const patchCopyBatch = (context) => {
-  const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
-  const port = newDomain.split(':').pop()
-  const copyBatchPath = `${snapshotPath}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
-
-  try {
-    const copyBatchLib = require(copyBatchPath)
-    const oldMethod = copyBatchLib.copyBatch
-    copyBatchLib.copyBatch = async (context, jobs, props, force, writeParams) => {
-      await oldMethod(context, jobs, props, force, writeParams)
-
-      //
-      jobs.forEach(job => {
-        // console.log(`LS Plugin is patching file: ${job.template}`)
-        const file = job.target
-        const content = fs.readFileSync(file).toString()
-        const newContent = content.replace(new RegExp(`amazonaws.com(:${port})?`, 'gm'), newDomain)
-        fs.writeFileSync(file, newContent)
-      })
-    }
-  } catch (error) {
-    context.print.error('Error:\t\tLocalStack Plugin unable to patch CopyBatch Utility', error)
-  }
-}
+// const patchCopyBatch = (context) => {
+//   const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
+//   const port = newDomain.split(':').pop()
+//   const copyBatchPath = `${snapshotPath}@aws-amplify/cli-internal/lib/extensions/amplify-helpers/copy-batch`
+//
+//   try {
+//     const copyBatchLib = require(copyBatchPath)
+//     const oldMethod = copyBatchLib.copyBatch
+//     copyBatchLib.copyBatch = async (context, jobs, props, force, writeParams) => {
+//       await oldMethod(context, jobs, props, force, writeParams)
+//
+//       //
+//       jobs.forEach(job => {
+//         // console.log(`LS Plugin is patching file: ${job.template}`)
+//         const file = job.target
+//         const content = fs.readFileSync(file).toString()
+//         const newContent = content.replace(new RegExp(`amazonaws.com(:${port})?`, 'gm'), newDomain)
+//         fs.writeFileSync(file, newContent)
+//       })
+//     }
+//   } catch (error) {
+//     context.print.error('Error:\t\tLocalStack Plugin unable to patch CopyBatch Utility', error)
+//   }
+// }
 
 // Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
+// These EJS tend to be AWS Cloudformation JSON templates
 const patchWriteJsonFileUtility = (context) => {
   const jsonUtilitiesPath = `${snapshotPath}@aws-amplify/amplify-cli-core/lib/jsonUtilities`
   const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
@@ -97,7 +98,7 @@ const patchEverything = (context) => {
   context.print.info('Info:\t Patching AWS Amplify libs')
   patchAwsSdkConfig(context)
   patchConfigManagerLoader(context)
-  patchCopyBatch(context)
+  // patchCopyBatch(context)
   patchWriteJsonFileUtility(context)
 }
 

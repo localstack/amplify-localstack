@@ -72,7 +72,6 @@ const patchEverything = (context) => {
   context.print.info('Info:\t Patching AWS Amplify libs')
   patchAwsSdkConfig(context)
   patchConfigManagerLoader(context)
-  // patchCopyBatch(context)
   patchWriteJsonFileUtility(context)
 }
 

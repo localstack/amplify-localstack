@@ -45,7 +45,7 @@ function replaceInObject (obj) {
     if (typeof node === 'string') {
       // Perform the replacement only if "Principal" is not in parent keys
       if (!parentKeys.includes('Principal')) {
-        return node.replace(regex, '')
+        return node.replace(regex, newDomain)
       }
       return node // Return unmodified value if "Principal" is a parent
     }

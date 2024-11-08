@@ -34,21 +34,51 @@ const patchConfigManagerLoader = (context) => {
   }
 }
 
-// Patchs the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
+// This functions main objective is to replace all amazonaws.com encounters except the ones under the Principal key
+// as such case are meant for IAM policies
+function replaceInObject (obj) {
+  const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
+  const port = newDomain.split(':').pop()
+  const regex = new RegExp(`amazonaws\\.com(:${port})?`, 'gm')
+
+  function traverse (node, parentKeys = []) {
+    if (typeof node === 'string') {
+      // Perform the replacement only if "Principal" is not in parent keys
+      if (!parentKeys.includes('Principal')) {
+        return node.replace(regex, '')
+      }
+      return node // Return unmodified value if "Principal" is a parent
+    }
+
+    if (Array.isArray(node)) {
+      return node.map(item => traverse(item, parentKeys))
+    }
+
+    if (node !== null && typeof node === 'object') {
+      return Object.keys(node).reduce((acc, key) => {
+        acc[key] = traverse(node[key], [...parentKeys, key])
+        return acc
+      }, {})
+    }
+
+    return node // Return the value if it is not an object, array, or string
+  }
+
+  return traverse(obj)
+}
+
+// Patches the utility that generates json files replacing the hardcoded AWS domains with LocalStack domains
 // These EJS tend to be AWS Cloudformation JSON templates
 const patchWriteJsonFileUtility = (context) => {
   const jsonUtilitiesPath = `${snapshotPath}@aws-amplify/amplify-cli-core/lib/jsonUtilities`
-  const newDomain = getLocalEndpoint().replace('https://', '').replace('http://', '')
-  const port = newDomain.split(':').pop()
 
   try {
     const jsonUtilities = require(jsonUtilitiesPath)
     const oldMethod = jsonUtilities.JSONUtilities.writeJson
     jsonUtilities.JSONUtilities.writeJson = (fileName, data, options) => {
       // console.log(`LS Plugin is patching file: ${fileName}`)
-      const stringData = JSON.stringify(data).replace(new RegExp(`amazonaws.com(:${port})?`, 'gm'), newDomain)
-
-      const newData = JSON.parse(stringData)
+      const copyOfData = JSON.parse(JSON.stringify(data))
+      const newData = replaceInObject(copyOfData)
       oldMethod(fileName, newData, options)
     }
   } catch (error) {

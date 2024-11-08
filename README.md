@@ -47,6 +47,7 @@ The following environment variables can be configured:
 * `LOCALSTACK_ENDPOINT`: Sets a custom endpoint (default `https://localhost.localstack.cloud:4566`).
 
 ## Change Log
+* 0.2.8: skip patching of endpoints for Statement Principals
 * 0.2.7: remove patching of CFn files
 * 0.2.6: more and up to date settings
 * 0.2.5: patch AWS-SDK Config
